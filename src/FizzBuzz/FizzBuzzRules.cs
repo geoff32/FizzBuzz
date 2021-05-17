@@ -8,6 +8,8 @@ namespace FizzBuzz
         [MultipleOf(3), Contains(3)]
         Fizz,
         [MultipleOf(5), Contains(5)]
-        Buzz
+        Buzz,
+        [MultipleOf(7), Contains(7)]
+        Boom
     }
 }

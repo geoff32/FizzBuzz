@@ -9,6 +9,7 @@ namespace FizzBuzz.Tests.Rules
         [Theory]
         [InlineData(3, "Fizz")]
         [InlineData(5, "Buzz")]
+        [InlineData(7, "Boom")]
         public void Rules_ShouldHaveMultipleRule(int divisor, string label)
         {
             var ruleProvider = new RuleProvider<FizzBuzzRules>();
@@ -22,6 +23,7 @@ namespace FizzBuzz.Tests.Rules
         [Theory]
         [InlineData(3, "Fizz")]
         [InlineData(5, "Buzz")]
+        [InlineData(7, "Boom")]
         public void Rules_ShouldHaveContainsRule(int digit, string label)
         {
             var ruleProvider = new RuleProvider<FizzBuzzRules>();
@@ -65,14 +67,14 @@ namespace FizzBuzz.Tests.Rules
         [InlineData(30)]
         [InlineData(45)]
         [InlineData(60)]
-        public void Match_BothMultiple_ShouldReturnBothMultipleRule(int input)
+        public void Match_MoreThanOneMultiple_ShouldReturnMoreThanOneMultipleRule(int input)
         {
             var ruleProvider = new RuleProvider<FizzBuzzRules>();
 
             var rules = ruleProvider.Match(input);
 
             Assert.NotNull(rules);
-            Assert.Equal(2, rules.OfType<MultipleRule>().Count());
+            Assert.True(rules.OfType<MultipleRule>().Count() > 1, "Rules must contain more than 2 multiple rule");
         }
 
         [Theory]
@@ -81,15 +83,14 @@ namespace FizzBuzz.Tests.Rules
         [InlineData(352)]
         [InlineData(523)]
         [InlineData(532)]
-        public void Match_BothContains_ShouldReturnBothContainsRule(int input)
+        public void Match_MoreThanOneContains_ShouldReturnMoreThanOneContainsRule(int input)
         {
             var ruleProvider = new RuleProvider<FizzBuzzRules>();
 
             var rules = ruleProvider.Match(input);
 
             Assert.NotNull(rules);
-            Assert.All(rules, rule => Assert.IsType<ContainsRule>(rule));
-            Assert.Equal(2, rules.OfType<ContainsRule>().Count());
+            Assert.True(rules.OfType<ContainsRule>().Count() > 1, "Rules must contain more than 1 contains rule");
         }
     }
 }
